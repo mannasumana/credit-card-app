@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Credit Card Default Predictor</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Credit Card Default Prediction</h1>
+    <p>Enter customer details to predict default risk</p>
+
+    <div class="form-box">
+
+        <input type="number" id="limit_bal" placeholder="Credit Limit">
+        <input type="number" id="age" placeholder="Age">
+        <input type="number" id="bill_amt1" placeholder="Bill Amount 1">
+
+        <button onclick="predict()">Predict Default Risk</button>
+
+    </div>
+
+    <div class="result-box">
+        <h2 id="result">Prediction Result Will Appear Here</h2>
+    </div>
+
+</div>
+
+<script>
+
+function predict(){
+
+    const data = {
+        limit_bal: document.getElementById("limit_bal").value,
+        age: document.getElementById("age").value,
+        bill_amt1: document.getElementById("bill_amt1").value
+    }
+
+    fetch("/predict",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify(data)
+    })
+
+    .then(response => response.json())
+    .then(data => {
+
+        document.getElementById("result").innerHTML =
+        "Prediction: " + data.prediction
+
+    })
+
+}
+
+</script>
+
+</body>
+</html>
