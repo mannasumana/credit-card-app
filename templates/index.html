@@ -1,62 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Credit Card Default Predictor</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
+    <div class="container">
+        <div class="header">
+            <h1>Credit Card Default Predictor</h1>
+            <p>Enter customer details to predict default risk</p>
+        </div>
 
-<div class="container">
+        <form method="POST" action="/predict" class="form-box">
+            <input type="number" name="limit_bal" placeholder="Credit Limit" required>
+            <input type="number" name="age" placeholder="Age" required>
+            <input type="number" name="bill_amt1" placeholder="Bill Amount 1" required>
+            <button type="submit">Predict Default Risk</button>
+        </form>
 
-    <h1>Credit Card Default Prediction</h1>
-    <p>Enter customer details to predict default risk</p>
-
-    <div class="form-box">
-
-        <input type="number" id="limit_bal" placeholder="Credit Limit">
-        <input type="number" id="age" placeholder="Age">
-        <input type="number" id="bill_amt1" placeholder="Bill Amount 1">
-
-        <button onclick="predict()">Predict Default Risk</button>
-
+        {% if prediction_text %}
+        <div class="result-box">
+            <h2>{{ prediction_text }}</h2>
+        </div>
+        {% endif %}
     </div>
-
-    <div class="result-box">
-        <h2 id="result">Prediction Result Will Appear Here</h2>
-    </div>
-
-</div>
-
-<script>
-
-function predict(){
-
-    const data = {
-        limit_bal: document.getElementById("limit_bal").value,
-        age: document.getElementById("age").value,
-        bill_amt1: document.getElementById("bill_amt1").value
-    }
-
-    fetch("/predict",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify(data)
-    })
-
-    .then(response => response.json())
-    .then(data => {
-
-        document.getElementById("result").innerHTML =
-        "Prediction: " + data.prediction
-
-    })
-
-}
-
-</script>
-
 </body>
 </html>

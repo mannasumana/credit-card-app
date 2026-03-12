@@ -1,60 +1,86 @@
-body{
-    font-family: Arial;
-    background: linear-gradient(120deg,#4facfe,#00f2fe);
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+/* Reset some defaults */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-.container{
-    background:white;
-    padding:40px;
-    border-radius:10px;
-    width:400px;
-    text-align:center;
-    box-shadow:0px 10px 25px rgba(0,0,0,0.2);
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2); /* beautiful purple-blue gradient */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-h1{
-    color:#333;
+.container {
+    background: rgba(255, 255, 255, 0.95); /* slightly transparent white */
+    backdrop-filter: blur(10px); /* adds frosted glass effect */
+    padding: 50px;
+    border-radius: 20px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25); /* soft shadow for depth */
+    transition: transform 0.3s ease;
 }
 
-p{
-    color:gray;
+.container:hover {
+    transform: translateY(-5px); /* subtle lift on hover */
 }
 
-.form-box input{
-    width:90%;
-    padding:10px;
-    margin:10px;
-    border-radius:5px;
-    border:1px solid #ccc;
+.header h1 {
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 10px;
 }
 
-button{
-    width:95%;
-    padding:12px;
-    margin-top:10px;
-    background:#4CAF50;
-    color:white;
-    font-size:16px;
-    border:none;
-    border-radius:5px;
-    cursor:pointer;
+.header p {
+    color: #555;
+    margin-bottom: 30px;
+    font-size: 16px;
 }
 
-button:hover{
-    background:#45a049;
+.form-box input {
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    transition: border 0.3s ease;
 }
 
-.result-box{
-    margin-top:20px;
-    padding:15px;
-    background:#f4f4f4;
-    border-radius:8px;
+.form-box input:focus {
+    border-color: #667eea; /* matches gradient */
+    outline: none;
 }
 
-#result{
-    color:#333;
+button {
+    width: 100%;
+    padding: 16px;
+    margin-top: 15px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #764ba2, #667eea);
+    transform: translateY(-2px);
+}
+
+.result-box {
+    margin-top: 25px;
+    padding: 20px;
+    background: #f1f1f1;
+    border-radius: 15px;
+    color: #333;
+    font-weight: bold;
+    font-size: 18px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }

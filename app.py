@@ -1,27 +1,28 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, render_template, request
+import pickle
+import numpy as np
 
 app = Flask(__name__)
 
-@app.route("/")
+# Load model and scaler
+model = pickle.load(open("model.pkl", "rb"))
+scaler = pickle.load(open("scaler.pkl", "rb"))
+
+@app.route("/", methods=["GET", "POST"])
 def home():
-    return render_template("index.html")
+    prediction_text = None
+    if request.method == "POST":
+        limit_bal = float(request.form["limit_bal"])
+        age = float(request.form["age"])
+        bill_amt1 = float(request.form["bill_amt1"])
 
-@app.route("/predict", methods=["POST"])
-def predict():
+        X = np.array([[limit_bal, age, bill_amt1]])
+        X_scaled = scaler.transform(X)
 
-    data = request.get_json()
+        prediction = model.predict(X_scaled)
+        prediction_text = "Default" if prediction[0] == 1 else "No Default"
 
-    limit_bal = float(data["limit_bal"])
-    age = float(data["age"])
-    bill_amt1 = float(data["bill_amt1"])
-
-    # simple demo prediction
-    if bill_amt1 > 4000:
-        prediction = "High Default Risk"
-    else:
-        prediction = "Low Default Risk"
-
-    return jsonify({"prediction": prediction})
+    return render_template("index.html", prediction_text=prediction_text)
 
 if __name__ == "__main__":
     app.run(debug=True)
